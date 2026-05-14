@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # SopMines
 
 Auto-mine plugin for Paper/Spigot `1.16.5+` (built for Java 8).
@@ -154,6 +153,3 @@ Available tokens:
 - If FAWE is unavailable, block plan is generated asynchronously.
 - World changes are applied synchronously in batches by `performance.blocks-per-tick`.
 
-=======
-# SopMines
->>>>>>> 8985e84a461251eebae7e173a350bf2839d0a229
