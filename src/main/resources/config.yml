@@ -1,0 +1,57 @@
+messages:
+  prefix: '&8[&bSopMines&8] '
+  no-permission: '{prefix}&cYou do not have permission.'
+  usage-admin: '{prefix}&e/sopmines <next|setnext|setcurrent|reload|pos1|pos2|createautomine|createmine|setmineblocks> ...'
+  automine-not-found: '{prefix}&cAuto-mine &f{automine}&c was not found.'
+  mine-not-found: '{prefix}&cMine &f{mine}&c was not found.'
+  switched-next: '{prefix}&aAuto-mine &f{automine}&a switched to: &f{current}.'
+  set-next: '{prefix}&aNext mine for &f{automine}&a is: &f{next}.'
+  set-current: '{prefix}&aCurrent mine for &f{automine}&a is: &f{current}.'
+  reloaded: '{prefix}&aSopMines has been reloaded.'
+
+time:
+  format: '{hours}h {minutes}m {seconds}s'
+
+mines:
+  common-small:
+    name: '&7Common Small'
+    blocks:
+      - 'STONE:70'
+      - 'COAL_ORE:30'
+    surface-blocks:
+      - 'STONE:1'
+      - 'COBBLESTONE:1'
+    surface-layer:
+      enabled: false
+      thickness: 1
+    duration-seconds: 300
+  rare-medium:
+    name: '&9Rare Medium'
+    blocks:
+      - 'STONE:55'
+      - 'IRON_ORE:25'
+      - 'GOLD_ORE:20'
+    surface-blocks:
+      - 'STONE:1'
+      - 'COBBLESTONE:1'
+    surface-layer:
+      enabled: false
+      thickness: 1
+    duration-seconds: 300
+  epic-rich:
+    name: '&5Epic Rich'
+    blocks:
+      - 'STONE:45'
+      - 'GOLD_ORE:25'
+      - 'DIAMOND_ORE:30'
+    surface-blocks:
+      - 'STONE:1'
+      - 'COBBLESTONE:1'
+    surface-layer:
+      enabled: false
+      thickness: 1
+    duration-seconds: 300
+
+performance:
+  use-fawe-if-available: true
+  blocks-per-tick: 1500

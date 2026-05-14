@@ -1,0 +1,19 @@
+id: mine-a
+enabled: false
+name: '&aMine A'
+position:
+  world: world
+  pos1:
+    x: 0
+    y: 60
+    z: 0
+  pos2:
+    x: 10
+    y: 70
+    z: 10
+mines:
+  - common-small
+  - rare-medium
+allow-consecutive-repeats: false
+on-update-commands:
+  - '[broadcast] &eАвтошахта {automine_display} обновлена: {current_display}'

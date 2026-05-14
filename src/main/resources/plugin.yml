@@ -1,0 +1,16 @@
+name: SopMines
+main: net.enelson.sopmines.SopMinesPlugin
+version: ${project.version}
+api-version: '1.16'
+authors: [E_NeLsOn]
+depend: [SopLib]
+softdepend: [PlaceholderAPI]
+commands:
+  sopmines:
+    aliases: [sm]
+    description: Auto mines administration
+    usage: /sopmines <next|setnext|setcurrent|reload> ...
+permissions:
+  sopmines.admin:
+    description: Allows using SopMines admin commands.
+    default: op
