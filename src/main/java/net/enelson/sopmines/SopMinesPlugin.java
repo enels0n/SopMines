@@ -43,8 +43,6 @@ public final class SopMinesPlugin extends JavaPlugin {
             getCommand("sopmines").setExecutor(command);
             getCommand("sopmines").setTabCompleter(command);
         }
-
-        registerExpansion();
     }
 
     @Override

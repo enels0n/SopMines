@@ -12,8 +12,8 @@ position:
     y: 70
     z: 10
 mines:
-  - common-small
-  - rare-medium
+  - 'common-small:70'
+  - 'rare-medium:30'
 allow-consecutive-repeats: false
 on-update-commands:
   - '[broadcast] &eАвтошахта {automine_display} обновлена: {current_display}'

@@ -283,6 +283,7 @@ public final class AutoMineService {
 
     private String pickRandomMine(SopMinesConfig config, AutoMineDefinition definition, String avoidMineId) {
         List<String> candidates = new ArrayList<String>();
+        int totalWeight = 0;
         for (String mineId : definition.getMineIds()) {
             if (!config.getMines().containsKey(mineId)) {
                 continue;
@@ -294,11 +295,25 @@ public final class AutoMineService {
                 continue;
             }
             candidates.add(mineId);
+            Integer weight = definition.getMineWeights().get(mineId);
+            totalWeight += Math.max(1, weight == null ? 1 : weight.intValue());
         }
         if (candidates.isEmpty()) {
             return null;
         }
-        return candidates.get(random.nextInt(candidates.size()));
+        if (totalWeight <= 0) {
+            return candidates.get(random.nextInt(candidates.size()));
+        }
+        int roll = random.nextInt(totalWeight);
+        int cursor = 0;
+        for (String mineId : candidates) {
+            Integer weight = definition.getMineWeights().get(mineId);
+            cursor += Math.max(1, weight == null ? 1 : weight.intValue());
+            if (roll < cursor) {
+                return mineId;
+            }
+        }
+        return candidates.get(candidates.size() - 1);
     }
 
     private boolean isMineAllowedForAutoMine(String mineId, AutoMineDefinition definition, SopMinesConfig config) {

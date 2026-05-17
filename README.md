@@ -83,8 +83,8 @@ position:
     y: 70
     z: 10
 mines:
-  - common-small
-  - rare-medium
+  - 'common-small:70'
+  - 'rare-medium:30'
 allow-consecutive-repeats: false
 on-update-commands:
   - '[broadcast] &eAuto mine {automine_display} updated: {current_display}'
@@ -95,7 +95,7 @@ Auto-mine fields:
 - `enabled` - enables/disables this auto-mine.
 - `name` - display name of the auto-mine.
 - `position` - region for this auto-mine (`world`, `pos1`, `pos2`).
-- `mines` - list of mine IDs from `config.yml -> mines`.
+- `mines` - list of mine IDs from `config.yml -> mines` with optional weight (`mineId:weight`).
 - `allow-consecutive-repeats` - if `true`, the same mine may be selected multiple times in a row.
 - `on-update-commands` - commands executed on mine switch.
 

@@ -132,16 +132,11 @@ public final class SopMinesConfig {
                     }
                     YamlConfiguration autoConfig = YamlConfiguration.loadConfiguration(file);
                     String automineId = lower(autoConfig.getString("id", file.getName().substring(0, file.getName().length() - 4)));
-                    List<String> allowedMines = new ArrayList<String>();
-                    for (String mineId : autoConfig.getStringList("mines")) {
-                        String normalizedMineId = lower(mineId);
-                        if (mines.containsKey(normalizedMineId)) {
-                            allowedMines.add(normalizedMineId);
-                        }
-                    }
-                    if (allowedMines.isEmpty()) {
+                    Map<String, Integer> weightedMines = parseAutoMineWeights(autoConfig, "mines", mines);
+                    if (weightedMines.isEmpty()) {
                         continue;
                     }
+                    List<String> allowedMines = new ArrayList<String>(weightedMines.keySet());
                     boolean enabled = autoConfig.getBoolean("enabled", true);
                     String displayName = firstNonBlank(autoConfig.getString("name"), automineId);
                     ConfigurationSection position = autoConfig.getConfigurationSection("position");
@@ -176,6 +171,7 @@ public final class SopMinesConfig {
                             Math.max(y1, y2),
                             Math.max(z1, z2),
                             allowedMines,
+                            weightedMines,
                             allowConsecutiveRepeats,
                             initialCurrentMineId,
                             initialNextMineId,
@@ -341,5 +337,56 @@ public final class SopMinesConfig {
             return;
         }
         blocks.add(new MineDefinition.BlockEntry(materialName, weight));
+    }
+
+    private static Map<String, Integer> parseAutoMineWeights(YamlConfiguration config, String path, Map<String, MineDefinition> availableMines) {
+        Map<String, Integer> weighted = new LinkedHashMap<String, Integer>();
+        Object raw = config.get(path);
+        if (raw instanceof ConfigurationSection) {
+            ConfigurationSection section = (ConfigurationSection) raw;
+            for (String mineId : section.getKeys(false)) {
+                String normalizedMineId = lower(mineId);
+                if (!availableMines.containsKey(normalizedMineId)) {
+                    continue;
+                }
+                int weight = Math.max(1, section.getInt(mineId, 1));
+                mergeMineWeight(weighted, normalizedMineId, weight);
+            }
+            return weighted;
+        }
+
+        List<String> values = config.getStringList(path);
+        for (String line : values) {
+            if (line == null || line.trim().isEmpty()) {
+                continue;
+            }
+            String[] split = line.split(":");
+            String mineId = lower(split[0]);
+            if (!availableMines.containsKey(mineId)) {
+                continue;
+            }
+            int weight = 1;
+            if (split.length >= 2) {
+                try {
+                    weight = Integer.parseInt(split[1].trim());
+                } catch (NumberFormatException ignored) {
+                    continue;
+                }
+            }
+            if (weight <= 0) {
+                continue;
+            }
+            mergeMineWeight(weighted, mineId, weight);
+        }
+        return weighted;
+    }
+
+    private static void mergeMineWeight(Map<String, Integer> weighted, String mineId, int weight) {
+        Integer existing = weighted.get(mineId);
+        if (existing == null) {
+            weighted.put(mineId, Integer.valueOf(weight));
+            return;
+        }
+        weighted.put(mineId, Integer.valueOf(existing.intValue() + weight));
     }
 }

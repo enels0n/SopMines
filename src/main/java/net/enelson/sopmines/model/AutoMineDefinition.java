@@ -2,7 +2,9 @@ package net.enelson.sopmines.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class AutoMineDefinition {
 
@@ -17,6 +19,7 @@ public final class AutoMineDefinition {
     private final int maxY;
     private final int maxZ;
     private final List<String> mineIds;
+    private final Map<String, Integer> mineWeights;
     private final boolean allowConsecutiveRepeats;
     private final String initialCurrentMineId;
     private final String initialNextMineId;
@@ -33,6 +36,7 @@ public final class AutoMineDefinition {
                               int maxY,
                               int maxZ,
                               List<String> mineIds,
+                              Map<String, Integer> mineWeights,
                               boolean allowConsecutiveRepeats,
                               String initialCurrentMineId,
                               String initialNextMineId,
@@ -48,6 +52,7 @@ public final class AutoMineDefinition {
         this.maxY = maxY;
         this.maxZ = maxZ;
         this.mineIds = Collections.unmodifiableList(new ArrayList<String>(mineIds));
+        this.mineWeights = Collections.unmodifiableMap(new LinkedHashMap<String, Integer>(mineWeights));
         this.allowConsecutiveRepeats = allowConsecutiveRepeats;
         this.initialCurrentMineId = initialCurrentMineId;
         this.initialNextMineId = initialNextMineId;
@@ -96,6 +101,10 @@ public final class AutoMineDefinition {
 
     public List<String> getMineIds() {
         return mineIds;
+    }
+
+    public Map<String, Integer> getMineWeights() {
+        return mineWeights;
     }
 
     public boolean isAllowConsecutiveRepeats() {
